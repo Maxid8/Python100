@@ -25,6 +25,7 @@ headers = {
 # response = requests.post(url=pixela_endpint, json=user_params)
 # print(response.text)
 
+# --- Create the graph ---
 
 graph_config = {
     "id": "graph1",
@@ -39,6 +40,8 @@ graph_config = {
 # response = requests.post(url=graph_endpoint, json=graph_config, headers=headers)
 # print(response.text)
 
+# --- Daily update to the graph ---
+
 time_tuple = time.localtime() # get struct_time
 time_string = time.strftime("%Y%m%d", time_tuple)
 
@@ -46,8 +49,19 @@ graph_endpoint = f"{pixela_endpint}/{USERNAME}/graphs/{graph_config['id']}"
 
 graph_update = {
     "date": time_string,
-    "quantity": "10"
+    "quantity": "20"
 }
 
-response = requests.post(url=graph_endpoint, json=graph_update, headers=headers)
+# response = requests.post(url=graph_endpoint, json=graph_update, headers=headers)
+# print(response.text)
+
+# --- overwrite pixel ---
+
+ow_time = "20240125"
+ow_graph_endpoint = f"{pixela_endpint}/{USERNAME}/graphs/{graph_config['id']}/{ow_time}"
+ow_graph_update = {
+    "quantity": "12"
+}
+
+response = requests.put(url=ow_graph_endpoint, json=ow_graph_update, headers=headers)
 print(response.text)
